@@ -1,1 +1,125 @@
+#include <stdio.h>
+#include <stdlib.h>
 
+
+
+typedef struct node {
+  int value;
+  struct node *next, *prev;
+} node;
+
+void add(node **root, int elem);
+void print(node *root);
+node *find(node *root, int elem);
+void delall(node **root, int elem);
+void insertafter(node *n,int elem);
+void delnode(node **root, node *n);
+
+node* find(node *root, int elem)
+{
+   node *t = root;
+   while(t != NULL)
+   {
+      if (t->value == elem)
+         break;
+      t = t->next;
+   }
+   return t;
+}
+
+void add(node **root, int elem)
+{
+   node *p = *root;
+   node *t;
+   t = malloc(sizeof(node));
+   t->value = elem;
+   t->next = *root;
+   t->prev = NULL;
+   if (p != NULL)
+      p->prev = t;
+   *root = t;
+}
+
+void print(node *root)
+{
+   while (root != NULL)
+   {
+      printf("%d ", root->value);
+      root = root->next;
+   }
+   printf("\n");
+}
+
+void delall(node **root, int elem)
+{
+   node *back = *root;
+   node *t = *root;
+   while(t != NULL)
+   {
+      if (t->value == elem)
+      {
+         if (back != t)
+         {
+            t = t->next;
+            back->next = t;
+         }
+         else
+         {
+            *root = t->next;
+            t = *root;
+            back = t;
+         }
+      }
+      else
+      {
+         back = t;
+         t = t->next;
+      }
+   }
+}
+
+void insertafter(node *n,int elem)
+{
+   node *f = n;
+   node *d = n;
+   node *t;
+   d = d->next;
+   t = malloc(sizeof(node));
+   t->value = elem;
+   t->next = d;
+   f->next = t;
+}  
+
+void delnode(node **root, node *n)
+{
+   node *p = *root;
+   node *ne = *root;
+   p = n;
+   ne = n;
+   p = p->prev;
+   ne = ne->next;
+  if (p == NULL)
+     *root = ne;
+  else 
+     p->next = ne;
+  if (ne != NULL)
+     ne->prev = p;
+}
+
+int main(void)
+{ node *root=NULL;
+  // root->NULL
+  add(&root,1);
+  // root->[1]->NULL
+  add(&root,2);
+  // root->[2]<->[1]->NULL
+  add(&root,3);
+  // root->[3]<->[2]<->[1]->NULL
+  node *n=root->next;
+  delnode(&root,n);
+  // root->[3]<->[1]->NULL
+   print(root);
+}
+
+
+//printf("%d\n", t->value);
