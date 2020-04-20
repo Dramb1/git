@@ -1,0 +1,83 @@
+#include <stdio.h>
+
+void down(int *a, int n)
+{
+   int k=0, u, t, e = a[0];
+   a[0] = a[n-1];
+      u = (k +1) * 2;
+      if ( u < n && a[u] > a[u-1])
+      {}
+      else 
+         u--;
+      while (u < n &&  a[k] < a[u])
+      {
+         t = a[k];
+         a[k] = a[u];
+         a[u] = t;
+         k = u;
+         u = (k +1) * 2;
+         if (u < n && a[u] > a[u-1])
+         {}
+         else 
+            u--;
+      }
+    printf("%d %d\n", k+1, e);  
+}
+
+void up(int *a, int n, int e)
+{
+   int k=n, u, t;
+   a[n] = e;
+   u = (k-1)/2;
+      while (a[k] > a[u] && u >= 0)
+      {
+         t = a[k];
+         a[k] = a[u];
+         a[u] = t;
+         k = u;
+         u = (k-1)/2;
+      }
+      printf("%d\n", k+1);
+}
+
+int main(void)
+{ 
+  int a[100000], n, m, op, k = 0, e;
+   scanf("%d%d", &n, &m);
+   for(int i = 0;i < m; i++)
+   {
+      scanf("%d", &op);
+      if (op == 1)
+      {
+         if(k == 0)
+            printf("-1\n");
+         else
+         {
+            if (k == 1)
+            {
+               printf("0 %d\n", a[k-1]);
+               
+               k--;
+            }
+            else
+            {
+               down(a, k);
+               k--;
+            }
+         }
+      }
+      else 
+      {
+         scanf("%d", &e);
+         if (k == n)
+            printf("-1\n");
+         else
+         {
+            up(a, k, e);
+            k++;
+         }
+      }
+   }
+   for (int i = 0; i< k; i++)
+      printf("%d ", a[i]);
+}
