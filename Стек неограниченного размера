@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node {
+  int value;
+  struct node *next, *prev;
+} node;
+
+typedef struct deque {
+  int size;
+  node *front, *back;
+} deque;
+
+
+void deque_popback(deque* d); 
+int deque_size(deque* d);
+void deque_init(deque* d);
+void print(deque *d);
+void mum(deque* d);
+
+int deque_front(deque* d) { return d->front->value; }
+
+void deque_pushfront(deque* d, int val) 
+{ node *n=malloc(sizeof(node)); 
+  n->value=val;
+  n->next=d->front;
+  n->prev=NULL;
+  d->size++;
+  if(d->front==NULL) {
+    d->front=d->back=n; 
+  }
+  else {
+    d->front->prev=n;
+    d->front=n;
+  }
+}
+
+
+void deque_init(deque* d)
+{ 
+   d->size=0;
+   d->front=d->back=NULL; 
+}
+
+int deque_size(deque* d) 
+{ 
+   return d->size; 
+} 
+
+
+void deque_popfront(deque* d)
+{ 
+   printf("%d\n", d->front->value);
+  node *n=d->front;
+  d->front=n->next;
+  free(n);
+  d->size--;
+  if(d->size==0)
+    d->front=d->back=NULL;
+  if(d->front)
+    d->front->prev=NULL;
+}
+
+int main(void)
+{ 
+  deque d;
+  deque_init(&d);
+  int  elem;
+   char s[5];
+   do
+   {
+      scanf("%s", s);
+      if (s[1] == 'u')
+      {
+         scanf("%d", &elem);
+         deque_pushfront(&d,elem);
+         printf("ok\n");
+      }
+      else if(s[1] == 'o')
+      {
+         if (deque_size(&d) == 0)
+            printf("error\n");
+         else
+         deque_popfront(&d);
+      }
+      else if(s[1] == 'a')
+      {
+         if (deque_size(&d) == 0)
+            printf("error\n");
+         else
+         printf("%d\n", deque_front(&d));
+      }
+      else if(s[1] == 'i')
+         printf("%d\n", deque_size(&d));
+      else if(s[1] == 'l')
+      {
+         printf("ok\n");
+         deque_init(&d);
+      }
+      else
+         break;
+   }while(1);
+  // k = deque_size(&d);
+      printf("bye\n");
+}
