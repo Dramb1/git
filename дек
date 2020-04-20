@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main(void)
+{
+   int s[100], k = 0;
+   int elem;
+   char a[11];
+   do
+   {
+      scanf("%s", a);
+      if (0 == strcmp(a, "push_front"))
+      {
+            scanf("%d", &elem);
+            s[k] = elem;
+            k++;
+            printf("ok\n");
+      }
+      else if (0 == strcmp(a, "push_back"))
+      {
+            scanf("%d", &elem);
+            for (int i = k; i > 0; i--)
+               s[i] = s[i - 1];
+            s[0] = elem;
+            k++;
+            printf("ok\n");
+      }
+      else if (0 == strcmp(a,"pop_front"))
+      {
+         if (k != 0)
+         {
+            printf("%d\n", s[k-1]);
+            k--;
+         }
+         else
+            printf("error\n");
+      }
+      else if (0 == strcmp(a,"pop_back"))
+      {
+         if (k != 0)
+         {
+            printf("%d\n", s[0]);
+            for (int i = 0; i < k-1; i++)
+               s[i] = s[i + 1];
+            k--;  
+         }
+         else 
+            printf("error\n");
+      }
+      else if (0 == strcmp(a, "front")) 
+         if (k != 0)
+            printf("%d\n", s[k-1]);
+         else 
+            printf("error\n");
+      else if (0 == strcmp(a, "back"))  
+         if (k != 0)
+            printf("%d\n", s[0]);
+         else 
+            printf("error\n");
+      else if (0 == strcmp(a, "size"))
+         printf("%d\n", k);
+      else if (0 == strcmp(a, "clear"))
+      {
+         k = 0;
+         printf("ok\n");
+      }
+      else
+         break;
+   } while (1);
+   printf("bye\n");
+   return 0;
+}
